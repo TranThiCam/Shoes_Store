@@ -1,0 +1,217 @@
+@import './variable';
+@import './mixi';
+// GlideJs library for slider and carousel
+@import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
+@import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
+
+@import './utils/header';
+@import './utils/footer';
+
+@import './library/validate';
+@import './library/toastr';
+
+// Customize scrollbar ================>
+
+body::-webkit-scrollbar-track {
+   background-color: #f5f5f5;
+}
+body::-webkit-scrollbar {
+   width: 10px;
+   background-color: #f5f5f5;
+}
+body::-webkit-scrollbar-thumb {
+   border-radius: 10px;
+   background-image: linear-gradient(to bottom, #a6d1e6, #eea4f5);
+}
+// Customize scrollbar ================>
+
+#root {
+   // min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+}
+
+// Text styles ==================>
+.text-title {
+   font-size: 1.8rem;
+}
+
+// Common components ===============>
+.input-custom {
+   outline: none;
+   background-color: transparent;
+   padding: 0 0.8rem;
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   text-transform: initial;
+   width: 20rem;
+}
+
+.fon-size-sm {
+   font-size: small;
+}
+
+.form-container {
+   display: flex;
+   flex-direction: column;
+   gap: 2rem;
+}
+
+input.input-feild {
+   padding: 1rem 1.7rem;
+   outline: none;
+   border: 1px solid $color-border-gray;
+   color: $color-text-primary;
+   text-transform: initial;
+}
+
+.glide__slide {
+   margin-bottom: 1px;
+}
+.flex-start {
+   justify-content: flex-start !important;
+}
+.nowrap {
+   white-space: nowrap;
+}
+.ptb-5 {
+   padding-top: 5rem;
+   padding-bottom: 5rem;
+}
+.plr-10 {
+   padding-left: 10rem;
+   padding-right: 10rem;
+}
+.mb-6 {
+   margin-bottom: 6rem;
+}
+.mb-4 {
+   margin-bottom: 4rem !important;
+}
+.text--underline {
+   text-decoration: underline;
+}
+.denind-uppercase {
+   text-transform: initial;
+}
+.text-center {
+   text-align: center;
+}
+.divider-vertical {
+   background-color: $color-palette-dark;
+   width: 1px;
+   height: 100%;
+   margin: 0 1rem;
+}
+
+.button {
+   display: inline-block;
+   text-align: center;
+   position: relative;
+   padding: 0.8rem 2rem;
+   letter-spacing: 0.13rem;
+   font-size: 1.6rem;
+   cursor: pointer;
+   overflow: hidden;
+   outline: none;
+   background-color: $color-bg-dark;
+   color: $color-white;
+   border: 1px solid $color-bg-dark;
+   @include transition;
+   z-index: 1;
+   &.button--danger {
+      &:hover {
+         border-color: $color-bg-danger !important;
+         color: $color-bg-danger !important;
+      }
+   }
+   &.button--modify {
+      color: var(--bs-info) !important;
+      border-color: var(--bs-info);
+   }
+   &.light {
+      color: $color-bg-dark;
+      background-color: $color-white;
+      &::after {
+         background-color: $color-bg-dark;
+      }
+      &:hover {
+         &::after {
+            // width: 100%;
+         }
+         color: $color-white !important;
+         // background-color: $color-bg-dark;
+      }
+   }
+   &.full {
+      width: 100%;
+      height: 100%;
+      padding: 1.2rem 2rem;
+   }
+
+   &.large {
+      padding: 1.2rem 3rem;
+   }
+   &::after {
+      position: absolute;
+      display: block;
+      content: '';
+      width: 0;
+      height: 100%;
+      left: 50%;
+      top: 0;
+      background-color: $color-white;
+      z-index: -1;
+      @include transition;
+      transform: translateX(-50%);
+   }
+   &:hover {
+      &::after {
+         width: 110%;
+      }
+      color: $color-bg-dark !important;
+   }
+   &.disable {
+      cursor: default;
+      opacity: 0.5;
+      &:hover {
+         color: $color-white !important;
+         &::after {
+            width: 0;
+         }
+      }
+   }
+}
+
+// TEMPLATE
+h1.cart-heading {
+   color: #252525;
+   font-size: 3rem;
+   margin-bottom: 5rem;
+   text-align: center;
+   text-transform: uppercase;
+}
+h1.page-heading {
+   color: #252525;
+   font-size: 3rem;
+   text-align: center;
+   margin-bottom: 5rem;
+   text-transform: uppercase;
+   span {
+      position: relative;
+      padding: 1rem 2rem;
+      background-color: white;
+      &::after {
+         content: '';
+         z-index: -1;
+         position: absolute;
+         @include centerPosition;
+         background-color: $color-bg-medium-gray;
+         width: 150%;
+         height: 1px;
+      }
+   }
+}
+.page-container {
+   padding: 8rem 0;
+}

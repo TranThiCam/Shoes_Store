@@ -1,0 +1,189 @@
+<html lang="en">
+   <head>
+      <%- include('../../partials/head'); %>
+      <title>USER PROFILE</title>
+      <link rel="stylesheet" href="/css/login.css" />
+      <link rel="stylesheet" href="/css/signup.css" />
+      <link rel="stylesheet" href="/css/profile.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div id="profile">
+               <div class="login signup">
+                  <div class="container">
+                     <div class="login-wrapper">
+                        <form id="form-update-user-profile" action="/api/v1/auth/signup" method="post">
+                           <div class="avatar">
+                              <label for="avatar-upload" class="avatar__upload">
+                                 <div class="avatar-wrapper">
+                                    <img id="avatar-img" src="<%= userInfo.avatar %>" alt="avatar" />
+                                 </div>
+                                 <input id="avatar-upload" hidden name="avatar" type="file" accept="image/*" />
+                              </label>
+                           </div>
+                           <div class="row form-container">
+                              <div class="col-12">
+                                 <input
+                                    type="text"
+                                    class="input-feild"
+                                    readonly="true"
+                                    placeholder="Tên đăng nhập"
+                                    autocomplete="off"
+                                    value="<%= userInfo.username %>"
+                                    name="username"
+                                    id="username"
+                                 />
+                              </div>
+
+                              <div class="col-12">
+                                 <input
+                                    class="input-feild"
+                                    readonly="true"
+                                    placeholder="Email"
+                                    value="<%= userInfo.email %>"
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                 />
+                              </div>
+                              <div class="col-12">
+                                 <input
+                                    class="input-feild"
+                                    readonly="true"
+                                    value="<%= userInfo.phoneNumber %>"
+                                    placeholder="Số điện thoại"
+                                    id="phoneNumber"
+                                    type="text"
+                                    name="phoneNumber"
+                                 />
+                              </div>
+                              <div class="col-12">
+                                 <input
+                                    type="text"
+                                    class="input-feild"
+                                    value="<%= userInfo.fullName %>"
+                                    placeholder="Họ và tên"
+                                    autocomplete="off"
+                                    name="fullName"
+                                    id="fullName"
+                                 />
+                              </div>
+                              <div class="col-12">
+                                 <input
+                                    class="input-feild"
+                                    placeholder="Địa chỉ"
+                                    value="<%= userInfo.address %>"
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                 />
+                              </div>
+                              <div class="col-12">
+                                 <div class="gender-wrapper">
+                                    <div class="form-check">
+                                       <input value="male" class="form-check-input gender-radio" type="radio"
+                                       name="gender" id="gender_1" <%= userInfo.gender === 'Male' ? 'checked' : '' %> />
+                                       <label class="form-check-label" for="gender_1"> Nam </label>
+                                    </div>
+                                    <div class="form-check">
+                                       <input value="female" class="form-check-input gender-radio" type="radio"
+                                       name="gender" id="gender_2" <%= userInfo.gender === 'Female' ? 'checked' : '' %>
+                                       />
+                                       <label class="form-check-label" for="gender_2"> Nữ </label>
+                                    </div>
+                                    <div class="form-check">
+                                       <input value="flex" class="form-check-input gender-radio" type="radio"
+                                       name="gender" id="gender_3" <%= userInfo.gender === 'Flex' ? 'checked' : '' %> />
+                                       <label class="form-check-label" for="gender_3"> Khác </label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <button type="submit" id="update-user-submit-btn" class="button disable button-full">
+                                 CẬP NHẬT
+                              </button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <%- include('../../partials/footer') %>
+      </div>
+      <%- include('../../partials/foot'); %>
+      <script type="module">
+         import {
+            configHeaders,
+            localStorage,
+            responseHandler,
+            getFormData,
+            privateRequestHandler,
+            refreshTokenHandler,
+         } from '/js/utils/index.js';
+         const validate = new window.JustValidate('#form-update-user-profile');
+         const submitBtn = $('#update-user-submit-btn');
+         const avatarNode = $('#avatar-upload');
+         validate
+            .addField('#fullName', [
+               {
+                  rule: 'minLength',
+                  value: 3,
+                  errorMessage: 'Họ và tên phải có ít nhất 3 ký tự',
+               },
+               {
+                  rule: 'maxLength',
+                  value: 30,
+                  errorMessage: 'Họ và tên chỉ được có tối đa 30 ký tự',
+               },
+            ])
+            .onSuccess(async (event) => {
+               if (!submitBtn.hasClass('disable')) {
+                  const totalData = getFormData(event.target);
+                  const genderOptionSelected = $('.gender-radio:checked');
+                  const formData = new FormData();
+
+                  formData.append(
+                     'userInfo',
+                     JSON.stringify({
+                        fullName: totalData.fullName,
+                        address: totalData.address,
+                        gender: genderOptionSelected.val(),
+                     }),
+                  );
+                  if (avatarNode[0]?.files?.length > 0) {
+                     const avatarFile = avatarNode[0].files[0];
+                     formData.append('avatar', avatarFile);
+                  }
+
+                  await privateRequestHandler('/api/user/update-info', 'put', formData, (data, status) => {
+                     toastr[data.status](data.message), 'multipart/form-data';
+                  });
+               } else {
+                  toastr.info('Thông tin người dùng không có sự sửa đổi nào !');
+               }
+            });
+         const removeClass = () => {
+            submitBtn.hasClass('disable') && submitBtn.removeClass('disable');
+         };
+         !(function checkModifyUser() {
+            const genderCheckInput = $('.form-check > input[type = radio]');
+            $('#fullName').on('input', removeClass);
+            $('#address').on('input', removeClass);
+            genderCheckInput.change(removeClass);
+            avatarNode.change(removeClass);
+         })();
+      </script>
+      <script>
+         const uploadAvatart = $('#avatar-upload');
+         const imgPreview = $('#avatar-img');
+         uploadAvatart.change(function () {
+            if (this.files && this.files[0]) {
+               const tempURL = URL.createObjectURL(this.files[0]);
+               imgPreview.attr('src', tempURL);
+            }
+         });
+      </script>
+   </body>
+</html>

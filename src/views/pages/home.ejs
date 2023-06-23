@@ -1,0 +1,370 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="css/home.css" />
+      <title>HOME PAGE</title>
+   </head>
+   <body>
+      <div class="root">
+         <%- include('../partials/header'); %>
+         <div id="main">
+            <div class="banner-container">
+               <div class="glide">
+                  <div class="glide__track" data-glide-el="track">
+                     <ul class="glide__slides">
+                        <li class="glide__slide">
+                           <a href="#">
+                              <img
+                                 src="https://cdn.shopify.com/s/files/1/0603/3031/1875/files/DM9036-104_Web_Desktop_2x_09a49662-b717-4fa5-99bc-78363bcd669c_1950x.jpg?v=1660883430"
+                                 alt=""
+                              />
+                           </a>
+                        </li>
+                        <li class="glide__slide">
+                           <a href="#">
+                              <img
+                                 src="https://cdn.shopify.com/s/files/1/0603/3031/1875/files/Web_Desktop_2x_15d4d2e9-e527-4ad9-b787-82f98cff873b_1950x.jpg?v=1660272572"
+                                 alt=""
+                              />
+                           </a>
+                        </li>
+                        <li class="glide__slide">
+                           <a href="#">
+                              <img
+                                 src="https://cdn.shopify.com/s/files/1/0603/3031/1875/files/0715_ct8532-105_web_03_1512x.jpg?v=1657880022"
+                                 alt=""
+                              />
+                           </a>
+                        </li>
+                        <li class="glide__slide">
+                           <a href="#">
+                              <img
+                                 src="https://cdn.shopify.com/s/files/1/0603/3031/1875/files/0715_BB550WT1_web_03_1512x.jpg?v=1657880102"
+                                 alt=""
+                              />
+                           </a>
+                        </li>
+                        <li class="glide__slide">
+                           <a href="#">
+                              <img
+                                 src="https://cdn.shopify.com/s/files/1/0603/3031/1875/files/Web_Desktop_2x_d7775c58-a3f5-4e05-b95c-00a19e19a32d_1950x.jpg?v=1657879961"
+                                 alt=""
+                              />
+                           </a>
+                        </li>
+                        <li class="glide__slide">
+                           <a href="#">
+                              <img
+                                 src="https://cdn.shopify.com/s/files/1/0603/3031/1875/files/Web_Desktop_2x_e9224153-8aa8-400e-a3ce-00a2621e5d8e_1950x.jpg?v=1658485552"
+                                 alt=""
+                              />
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="glide__arrows" data-glide-el="controls">
+                     <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                        <i class="fa-solid fa-angle-left"></i>
+                     </button>
+                     <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                        <i class="fa-solid fa-angle-right"></i>
+                     </button>
+                  </div>
+                  <div class="glide__bullets" data-glide-el="controls[nav]">
+                     <button class="glide__bullet" data-glide-dir="=0"></button>
+                     <button class="glide__bullet" data-glide-dir="=1"></button>
+                     <button class="glide__bullet" data-glide-dir="=2"></button>
+                  </div>
+               </div>
+            </div>
+            <div class="container">
+               <div class="main-container">
+                  <div class="category">
+                     <div class="section-title text-center mb-6" id="title">
+                        <h2>Sản phẩm mới nhất</h2>
+                     </div>
+                     <div class="category__container">
+                        <div class="glide category-product">
+                           <div class="glide__track" data-glide-el="track">
+                              <ul class="glide__slides">
+                                 <% if(latestProducts){ %> <% latestProducts.forEach(product =>{ %>
+                                 <li class="glide__slide">
+                                    <div class="category-item wow fadeInLeft">
+                                       <a href="/product/<%= product.slug %>" class="product-link">
+                                          <div class="category__image">
+                                             <img src="<%= product.product_images %>" alt="" />
+                                          </div>
+                                       </a>
+                                       <div class="category__desc">
+                                          <a href="/products/search?brandID=<%= product.brandID %>">
+                                             <div class="category__brand"><%= product.brandName %></div>
+                                          </a>
+                                          <a href="#">
+                                             <div class="category__name"><%= product.name %></div>
+                                          </a>
+                                          <div class="category__price">
+                                             GIÁ
+                                             <span class="<%= product.discounts !== null ? 'remove' : '' %>"
+                                                ><%= product.price %></span
+                                             >
+                                             <% if(product.discounts) { %>
+                                             <span><%= product.discounts.priceAfterApplyDiscount %></span>
+                                             <% } %>
+                                          </div>
+                                       </div>
+                                       <% if(product.discounts !== null) {%>
+                                       <div class="product-discount-label">
+                                          -<%= product.discounts.percentReduction %>%
+                                       </div>
+                                       <% } %>
+                                       <div class="category__foot" style="height: 1rem"></div>
+                                    </div>
+                                 </li>
+                                 <% }) %> <% } %>
+                              </ul>
+                           </div>
+                           <div class="glide__arrows" data-glide-el="controls">
+                              <button class="glide__arrow glide__arrow--left wow fadeInLeft" data-glide-dir="<">
+                                 <i class="fa-solid fa-angle-left"></i>
+                              </button>
+                              <button class="glide__arrow glide__arrow--right wow fadeInRight" data-glide-dir=">">
+                                 <i class="fa-solid fa-angle-right"></i>
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="container-full ptb-5">
+               <div class="brand-logo-area">
+                  <div class="glide brand-logo-wrapper">
+                     <div class="brand-logo-active glide__track" data-glide-el="track">
+                        <div class="glide__slides">
+                           <div class="single-brand glide__slide">
+                              <a href="/products/search?brandID=1"
+                                 ><img src="/assets/images/brand-logo/adidas.jpg" alt=""
+                              /></a>
+                           </div>
+                           <div class="single-brand glide__slide">
+                              <a href="/products/search?brandID=4">
+                                 <img src="/assets/images/brand-logo/converse.jpg" alt="" />
+                              </a>
+                           </div>
+                           <div class="single-brand glide__slide">
+                              <a href="/products/search?brandID=2">
+                                 <img src="/assets/images/brand-logo/fila.jpg" alt="" />
+                              </a>
+                           </div>
+                           <div class="single-brand glide__slide">
+                              <a href="/products/search?brandID=6">
+                                 <img src="/assets/images/brand-logo/jordan.jpg" alt="" />
+                              </a>
+                           </div>
+                           <div class="single-brand glide__slide">
+                              <a href="/products/search?brandID=5">
+                                 <img src="/assets/images/brand-logo/louis-vuitton.jpg" alt="" />
+                              </a>
+                           </div>
+                           <div class="single-brand glide__slide">
+                              <a href="/products/search?brandID=6">
+                                 <img src="/assets/images/brand-logo/nike.jpg" alt="" />
+                              </a>
+                           </div>
+                           <div class="single-brand glide__slide">
+                              <a href="/products/search?brandID=8">
+                                 <img src="/assets/images/brand-logo/supreme.jpg" alt="" />
+                              </a>
+                           </div>
+                           <div class="single-brand glide__slide">
+                              <a href="/products/search?brandID=10">
+                                 <img src="/assets/images/brand-logo/vans.jpg" alt="" />
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="all-products-area ptb-5">
+               <div class="plr-10">
+                  <div class="container-fluid">
+                     <div class="section-title text-center mb-6">
+                        <h2>Có thể bạn thích</h2>
+                     </div>
+                     <div class="product-style">
+                        <div class="custom-row">
+                           <% productsData.products.forEach(function(product){%>
+                           <div class="custom-col-5 custom-col-style mb-4 wow fadeInUp">
+                              <div class="product-wrapper">
+                                 <div class="product-img">
+                                    <a href="/product/<%= product.slug %>">
+                                       <img src="<%= product.product_images %>" alt="" />
+                                    </a>
+                                    <div class="product-action">
+                                       <div
+                                          class="animate-left add-to-wishlist"
+                                          title="Wishlist"
+                                          data-product-id="<%= product.ID %>"
+                                       >
+                                          <i class="fa-regular fa-heart"></i>
+                                       </div>
+                                       <a
+                                          href="/product/<%= product.slug %>"
+                                          class="animate-right"
+                                          title="Add To Cart"
+                                          data-product-id="<%= product.ID %>"
+                                       >
+                                          <i class="ti-shopping-cart"></i>
+                                       </a>
+                                    </div>
+                                 </div>
+                                 <div class="product-content">
+                                    <a href="/products/search?brandID=<%= product.brandID %>">
+                                       <div class="category__brand"><%=product.BRAND %></div>
+                                    </a>
+                                    <h4>
+                                       <a href="/product/<%= product.slug%>"><%= product.name %></a>
+                                    </h4>
+                                    <span class="<%= product.discounts !== null ? 'remove' : '' %>"
+                                       ><%= product.price %></span
+                                    >
+                                    <% if(product.discounts) { %>
+                                    <span><%= product.discounts.priceAfterApplyDiscount %></span>
+                                    <% } %>
+                                 </div>
+                                 <% if(product.discounts !== null) {%>
+                                 <div class="product-discount-label">-<%= product.discounts.percentReduction %>%</div>
+                                 <% } %>
+                              </div>
+                           </div>
+                           <% }); %>
+                        </div>
+                     </div>
+                     <div class="load-more">
+                        <div class="button">Load More</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <%- include('../partials/footer'); %>
+      </div>
+      <%- include('../partials/foot'); %>
+      <script src="js/library/glide.min.js"></script>
+      <script type="module">
+         import { privateRequestHandler } from '/js/utils/index.js';
+         new Glide('.glide', {
+            type: 'carousel',
+            autoplay: 5000,
+            animationDuration: 1000,
+            hoverpause: true,
+         }).mount();
+
+         new Glide('.glide.category-product', {
+            type: 'carousel',
+            perView: 4,
+            gap: 20,
+         }).mount();
+
+         new Glide('.glide.brand-logo-wrapper', {
+            type: 'carousel',
+            perView: 8,
+            hoverpause: false,
+            autoplay: 1000,
+            animationDuration: 2000,
+            gap: 20,
+         }).mount();
+
+         const loadMoreBtn = $('.load-more > .button');
+         const productNodeList = $('.custom-row');
+         let pageNumber = 2;
+         const limit = 5;
+         loadMoreBtn.click(async function () {
+            if (!$(this).hasClass('disable')) {
+               pageNumber++;
+               try {
+                  const productResult = await axios.get(`/api/product?page=${pageNumber || 1}&&limit=5`);
+                  const totalProducts = productResult.data.total;
+                  const endProductIndex = (pageNumber - 1) * limit + limit;
+                  if (endProductIndex >= totalProducts) {
+                     $(this).addClass('disable');
+                  }
+                  const products = productResult.data.products;
+                  const productsHtml = products.forEach((product) => {
+                     const productItem = document.createElement('div');
+                     productItem.classList.add('custom-col-5', 'custom-col-style', 'mb-4');
+                     productItem.innerHTML = `<div class="product-wrapper">
+                           <div class="product-img">
+                              <a href="/product/${product.slug}">
+                                 <img
+                                    src="${product.product_images}"
+                                    alt=""
+                                 />
+                              </a>
+                              <div class="product-action">
+                                 <div class="animate-left add-to-wishlist" title="Wishlist" data-product-id="${
+                                    product.ID
+                                 }">
+                                    <i class="fa-regular fa-heart"></i>
+                                 </div>
+                                 <a href="/product/${
+                                    product.slug
+                                 }" class="animate-right" title="Add To Cart" data-product-id="${product.ID}">
+                                    <i class="ti-shopping-cart"></i>
+                                 </a>
+                              </div>
+                           </div>
+                           <div class="product-content">
+                              <div class="category__brand">${product.BRAND}</div>
+                              <h4>
+                                 <a href="/product/${product.slug}"
+                                    >${product.name}</a
+                                 >
+                              </h4>
+                              <span class="${product.discounts ? 'remove' : ''}">${product.price}</span>
+                              ${product.discounts ? `<span>${product.discounts.priceAfterApplyDiscount}</span>` : ''}
+                           </div>
+                           ${
+                              product.discounts !== null
+                                 ? `
+                              <div class="product-discount-label">
+                                 -${product.discounts.percentReduction}%
+                              </div>`
+                                 : ''
+                           }
+                        </div>`;
+                     productNodeList[0].appendChild(productItem);
+                  });
+                  reloadProductLogic();
+               } catch (error) {
+                  toastr.error('Xảy ra lỗi khi load sản phẩm !');
+               }
+            } else {
+               toastr.warning('Đã hết sản phẩm để hiện thị !');
+            }
+         });
+
+         function reloadProductLogic() {
+            $('.add-to-wishlist')
+               .unbind('click')
+               .click(async function () {
+                  const PRODUCT_ID = this.dataset.productId;
+                  try {
+                     await privateRequestHandler(
+                        `/api/user/add-to-wishlist/${PRODUCT_ID}`,
+                        'post',
+                        {},
+                        (data, status) => {
+                           toastr[data.status](data.message);
+                        },
+                     );
+                  } catch (error) {
+                     toastr.error('Có lỗi xảy ra, vui lòng liên hệ quản trị viên !');
+                  }
+               });
+         }
+         reloadProductLogic();
+      </script>
+   </body>
+</html>

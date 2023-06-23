@@ -1,0 +1,59 @@
+<!-- LIBRARY -->
+<script src="/js/library/swipper.min.js"></script>
+<script src="/js/library/boostrap.min.js"></script>
+<script src="/js/library/justValidate.min.js"></script>
+<script src="/js/library/axios.min.js"></script>
+<script src="/js/library/popper.min.js"></script>
+<script src="/js/library/tippy.min.js"></script>
+<script src="/js/library/toastr.min.js"></script>
+<script src="/js/library/rangeslider.min.js"></script>
+<script src="/js/library/pagination-jquery.min.js"></script>
+<!-- GLOBAL LOGIC -->
+<script src="/js/global.js"></script>
+<script type="module">
+   import { localStorage } from '/js/utils/index.js';
+
+   if (localStorage.getStore()) {
+      const { refreshToken } = localStorage.getStore();
+      const logoutBtn = $('.user-options__item.logout');
+      logoutBtn.click(async () => {
+         console.log('logout clicked !');
+         const payload = { refreshToken };
+         const { data, status } = await axios.delete('/api/user/logout', { data: payload });
+         if (data.status === 'success' && status === 200) {
+            localStorage.clearStore();
+            window.location.href = '/';
+         } else {
+            const { status, message } = data;
+            toastr[status](message);
+         }
+      });
+   } else {
+      console.log('Missing refresh token to logout!');
+   }
+</script>
+<script type="module">
+   import { privateRequestHandler, formatToCurrency } from '/js/utils/index.js';
+   import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
+   $(() => {
+      const deleteCartBtn = $('.cart-delete');
+      deleteCartBtn?.click(function () {
+         deleteCartItemOnLick(this, privateRequestHandler, formatToCurrency, (productItemID) => {
+            const bodyRemoveItem = $(`.product-remove-btn[data-product-id="${productItemID}"]`);
+            if (bodyRemoveItem.length > 0) {
+               bodyRemoveItem[0]?.click();
+            }
+         });
+      });
+   });
+</script>
+<script type="module">
+   const discountBtn = $('#discount-btn');
+   const searchButton = $('.search-section.nav-item > a');
+   console.log('searchButton');
+
+   discountBtn.click(function (e) {
+      e.preventDefault();
+      window.location.href = '/products/search?discount=true';
+   });
+</script>

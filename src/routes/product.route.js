@@ -1,0 +1,15 @@
+const express = require('express');
+const productController = require('../controllers/product.controller');
+import { multipleFileUpload } from '../middlewares/uploadFiles';
+import { signleFileUpload } from '../middlewares/uploadFiles';
+import validateToken from '../middlewares/validateToken';
+import checkRole from '../middlewares/checkRole';
+const router = express.Router();
+router.get('/get', productController.get);
+router.get('/getNumPage', productController.getNumProduct);
+router.post('/create',checkRole(['admin']),multipleFileUpload('file'), productController.create);
+router.post('/add-comment', validateToken, signleFileUpload('image'), productController.insertProductComment);
+router.delete('/delete-comment/:commentID', validateToken, productController.deleteComment);
+router.post('/update',  checkRole(['admin']),multipleFileUpload('file'),productController.update);
+router.get('/', productController.getActiveProducts);
+module.exports = router;

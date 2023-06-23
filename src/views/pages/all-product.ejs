@@ -1,0 +1,413 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <title>ALL PRODUCTS</title>
+      <link rel="stylesheet" href="/css/all-product.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div class="all-product">
+               <div class="shop-page-wrapper">
+                  <div class="container">
+                     <div class="row gx-5">
+                        <div class="col-lg-3" id="sticky-parent">
+                           <div class="shop-sidebar" id="sticky-element">
+                              <div class="sidebar-widget mb-50">
+                                 <h3 class="sidebar-title">Tìm kiếm</h3>
+                                 <div class="sidebar-search">
+                                    <div class="search-input-wrapper">
+                                       <input id="search-input" placeholder="Tìm kiếm ..." type="text" />
+                                       <button id="search-btn"><i class="ti-search"></i></button>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="sidebar-widget mb-40">
+                                 <h3 class="sidebar-title">Lọc theo giá</h3>
+                                 <div class="price_filter">
+                                    <div id="slider-range"></div>
+                                    <div class="price_slider_amount">
+                                       <div class="label-input">
+                                          <div class="amount-range-slider"></div>
+                                       </div>
+                                       <label>
+                                          <span id="start-price">0 VND</span>
+                                          -
+                                          <span id="end-price">0 VND</span>
+                                       </label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="sidebar-widget mb-45">
+                                 <h3 class="sidebar-title">Danh mục</h3>
+                                 <div class="sidebar-categories">
+                                    <ul>
+                                       <li class="category-tab default"  data-id="all">
+                                          <a href="#">Tất cả<span><%= totalActiveProductsCount %></span></a>
+                                       </li>
+                                       <% categoriesData.forEach(category=>{ %>
+                                          <li class="category-tab" data-id="<%= category.ID %>">
+                                             <a href="#"><%= category.name %><span><%= category.productCount %></span></a>
+                                          </li>
+                                       <% }) %>
+                                    </ul>
+                                 </div>
+                              </div>
+                              <div class="sidebar-widget mb-40">
+                                 <h3 class="sidebar-title">size</h3>
+                                 <div class="product-size">
+                                    <ul>
+                                       <li class="size-item default"><a href="#">~</a></li>
+                                       <li class="size-item"><a href="#">38</a></li>
+                                       <li class="size-item"><a href="#">39</a></li>
+                                       <li class="size-item"><a href="#">40</a></li>
+                                       <li class="size-item"><a href="#">41</a></li>
+                                       <li class="size-item"><a href="#">42</a></li>
+                                       <li class="size-item"><a href="#">43</a></li>
+                                       <li class="size-item"><a href="#">44</a></li>
+                                       <li class="size-item"><a href="#">45</a></li>
+                                    </ul>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-lg-9">
+                           <div class="shop-product-wrapper">
+                              <div class="shop-bar-area">
+                                 <div class="shop-bar pb-60">
+                                    <div class="shop-found-selector">
+                                       <div class="shop-found">
+                                          <p>
+                                             <span class="" style="color:#6c6c6c; font-weight:500 "><%= productList.total %></span> Sản phẩm tìm thấy trong
+                                             <span class="" style="color: #6c6c6c; font-weight:500"><%= totalActiveProductsCount %></span> sản phẩm
+                                          </p>
+                                       </div>
+                                       <div class="shop-selector">
+                                          <span class="nowrap">Sắp xếp: </span>
+                                          <select class="form-select sort-select" aria-label="Default select example">
+                                             <option value="default" selected>Mặc định</option>
+                                             <option value="ASC">Giá Thấp -> Cao</option>
+                                             <option value="DESC">Giá Cao -> Thấp</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="shop-product-content tab-content">
+                                    <div id="grid-sidebar7" class="tab-pane fade active show">
+                                       <div class="row">
+                                          <% if(productList.products.length > 0) { %> 
+                                          <%productList.products.forEach(product=>{ %>
+                                          <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                                             <div class="product-wrapper product-box-style mb-30">
+                                                <div class="product-img">
+                                                   <a href="/product/<%= product.slug%>">
+                                                      <img src="<%= product.product_images %>" alt="" />
+                                                   </a>
+                                                   <div class="product-action">
+                                                      <div class="animate-left add-to-wishlist"  title="Wishlist" data-product-id="<%= product.ID %>" ">
+                                                         <i class="fa-regular fa-heart"></i>
+                                                      </div>
+                                                      <a
+                                                         class="animate-right"
+                                                         title="Add To Cart"
+                                                         href="/product/<%= product.slug %>"
+                                                      >
+                                                         <i class="ti-shopping-cart"></i>
+                                                      </a>
+                                                   </div>
+                                                </div>
+                                                <div class="product-content">
+                                                   <h4>
+                                                      <a href="/product/<%= product.slug %>"><%= product.name %></a>
+                                                   </h4>
+                                                   <span><%= product.price %></span>
+                                                </div>
+                                                <% if(product.discounts !== null) {%>
+                                                   <div class="product-discount-label">
+                                                      -<%= product.discounts.percentReduction %>%
+                                                   </div>
+                                                <% } %> 
+                                             </div>
+                                          </div>
+                                          <% }) %> 
+                                          <% } else {  %>
+                                             <div style="flex-direction: column" class="d-flex justify-content-center align-items-center">
+                                                <i style="font-size: 6rem !important" class="ti-na"> </i>
+                                                <p style="text-align: center; margin-top: 4rem;font-size:2.4rem" class="nothing-title">
+                                                   Không tìm thấy sản phầm nào  !
+                                                </p>
+                                             </div>
+                                          <% } %>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <% if(productList.products.length > 0) { %>
+                           <div class="pagination-style mt-10 text-center" id="pagination">
+                              <ul class="pagination-tabs-list"></ul>
+                           </div>
+                           <% } %>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <%- include('../partials/footer') %>
+      </div>
+      <%- include('../partials/foot') %>
+      <!-- STICKY SIDER BAR HANLDER -->
+      <script>
+         const stickyElement = $('#sticky-element');
+         const stickyParent = $('#sticky-parent');
+         const headerHeight = $('.header')[0].offsetHeight;
+         const screenHeight = window.screen.height;
+         const footer = $('#footer');
+         let isFixedSidebar = false;
+         let fixedTranformValue = 0;
+         const stickyElementHeight = stickyElement[0].offsetHeight;
+         const stickyParentHeight = stickyParent[0].offsetHeight;
+         const maximunTranslateValue = Number(stickyParentHeight)-Number(stickyElementHeight);
+
+         $(document).on('scroll', () => {
+            if(window.innerWidth > 990){
+            const { top: parentStickyTop } = stickyParent[0].getBoundingClientRect();
+            const { top: footerTop } = footer[0].getBoundingClientRect();
+
+            let transformTopValue;
+            if (parentStickyTop <= headerHeight) {
+               transformTopValue = headerHeight - parentStickyTop;
+            } else {
+               transformTopValue = 0;
+            }
+
+            if(transformTopValue < maximunTranslateValue){
+               stickyElement.css({transform: `translateY(${transformTopValue}px)`});
+            }else{
+               stickyElement.css({transform: `translateY(${maximunTranslateValue}px)`});
+            }
+            }
+         });
+      </script>
+      <!-- ADD PRODUCT TO WISHLIST -->
+      <script type="module">
+            import {privateRequestHandler} from '/js/utils/index.js';
+           $(".add-to-wishlist").click(async function (){
+               const PRODUCT_ID = this.dataset.productId;
+               try {
+                  await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`,'post',{},(data,status)=>{
+                  toastr[data.status](data.message);
+               })
+               } catch (error) {
+                  toastr.error("Có lỗi xảy ra, vui lòng liên hệ quản trị viên !");
+               }
+            })
+      </script>
+      <!-- PAGINATION MODULE -->
+      <script type="module">
+         import { formatToCurrency } from '/js/utils/index.js';
+         const pagination = $('#pagination');
+         const PAGE_SIZE = 9;
+         const urlParams = new URLSearchParams(window.location.search);
+         let currentPageNumber = Number(urlParams.get('page')) || 1;
+            
+         $(()=>{
+            let productList = `<%- JSON.stringify(productList) %>`;
+            productList = JSON.parse(productList);
+            const {total : totalDataCount } = productList;
+            const totalPageCount = Number(Math.ceil(totalDataCount / PAGE_SIZE));
+            if(currentPageNumber > totalPageCount ){
+               currentPageNumber = totalPageCount;
+            }
+            if(productList){
+               // IIFE
+               (()=>{
+                  const startPrice = $('#start-price');
+                  const endPrice = $('#end-price');
+                  const sortByPriceSelectNode = $('.sort-select');
+                  const url = new URL(window.location.href);
+                  const urlParams = new URLSearchParams(window.location.search);
+                  let lastPriceValueSet;
+                  return {
+                     changePriceInputRangeHandler(){
+                        const appendParamsIntoURL = (valueSet)=>{
+                           const fromPrice = valueSet[0];
+                           const toPrice = valueSet[1];
+                           url.searchParams.set('priceFrom', String(fromPrice));
+                           url.searchParams.set('priceTo', toPrice.toString());
+                           url.searchParams.set('page', 1);
+                           window.location.href = url.href;
+                        }
+                        
+                        const priceFrom = Number(urlParams.get("priceFrom") ) || 0;
+                        const priceTo = Number(urlParams.get("priceTo")) || 100;
+
+                        startPrice.text(formatToCurrency(priceFrom * 100000));
+                        endPrice.text(formatToCurrency(priceTo * 100000));
+                        
+                        rangeSlider(document.querySelector('.amount-range-slider'), {
+                           min: 0,
+                           max: 200,
+                           value: [priceFrom,priceTo],
+                           onInput: function (valueSet) {
+                              startPrice.text(formatToCurrency(valueSet[0] * 100000));
+                              endPrice.text(formatToCurrency(valueSet[1] * 100000));
+                           },
+                           onThumbDragEnd(valueSet){
+                              if(valueSet){
+                                 lastPriceValueSet = valueSet;
+                              }
+                              if(valueSet==undefined){
+                                 appendParamsIntoURL(lastPriceValueSet);
+                              }
+                           },
+                           onRangeDragEnd(valueSet){
+                              if(valueSet){
+                                 lastPriceValueSet = valueSet;
+                              }
+                              if(valueSet==undefined){
+                                 appendParamsIntoURL(lastPriceValueSet);
+                              }
+                           },
+                        });
+                     },
+                     renderPaginationTabs(){
+                        const paginationList = $('.pagination-tabs-list');
+                        let paginationTabHtml =`<li class="pagination-control previous-page ${currentPageNumber === 1 ? 'disable' : ''}"><a href="#"><i class="ti-angle-left"></i></a></li>`;
+                        for(let i=1;i<=totalPageCount;i++){
+                           paginationTabHtml += `<li class="pageNumber ${i===currentPageNumber ? 'active' : ''}" data-page-number="${i}"><a href="">${i}</a></li>`;
+                        }
+                        paginationTabHtml+= `<li class="pagination-control next-page ${currentPageNumber === totalPageCount ? 'disable' : ''}"><a href="#"><i class="ti-angle-right"></i></a>`;
+                        paginationList.html(paginationTabHtml);
+                     },
+                     sizeClickHandler(){
+                      const sizeItems = $('.size-item');
+                      const sizeValue  =  urlParams.get('size');
+                      if(sizeValue){
+                        [...sizeItems].forEach(sizeItem=>{
+                           if($(sizeItem).text() === sizeValue){
+                              $('.size-item.active').removeClass('active');
+                              $(sizeItem).addClass('active');
+                           }
+                        })
+                      }else{
+                        $('.size-item.default').addClass('active');
+                      }
+                      sizeItems.click(function(e){
+                        e.preventDefault();
+                        $('.size-item.active').removeClass('active');
+                        $(this).addClass('active');
+                        const sizeValue = $(this).text();
+                        url.searchParams.set('size', `${sizeValue}`);
+                        window.location.href = url.href;
+                      })
+                     },
+                     categoryHandler(){
+                        const categoryTabs = $('.category-tab');
+                        const currentCateID  =  urlParams.get('cateID');
+                        if(currentCateID){
+                           $('.category-tab.active').removeClass('active');
+                           $(`.category-tab[data-id=${currentCateID}]`).addClass('active');
+                        }else{
+                           $(`.category-tab.default`).addClass('active');
+                        }
+
+                        categoryTabs.click(function(e) {
+                           e.preventDefault();
+                           const cateID = this.dataset.id;
+                           url.searchParams.set('cateID',cateID);
+                           window.location.href = url.href;
+                        })
+                     },
+                     renderSortOptions(){
+                        const sortType = urlParams.get('sort');
+                        $(`.sort-select option[value="${sortType}"]`)?.attr('selected', true);
+                     },
+                     renderSearchInputValue(){
+                        const searchKeyword = urlParams.get('search');
+                        $('#search-input').val(searchKeyword);
+                     },
+                     activePageClickHandler(){
+                        const activePageTab = $('.pageNumber.active');
+                        activePageTab?.click((e)=>{
+                           e.preventDefault();
+                        })
+                     },
+                     sortSelectHandler(){
+                        sortByPriceSelectNode.on('change',function(){
+                           const sortType = $(this).val();
+                           url.searchParams.set('sort', sortType);
+                           window.location.href = url.href;
+                        })
+                     },
+                     controlTabClickHandler(){
+                        const controlTabs = $('.pagination-control');
+                        controlTabs.click(function(e){
+                           e.preventDefault();
+                           if(!$(this).hasClass('disable')){
+                             if($(this).hasClass('next-page')){
+                                url.searchParams.set('page', `${currentPageNumber + 1}`);
+                             }
+                             if($(this).hasClass('previous-page')){
+                                url.searchParams.set('page', `${currentPageNumber - 1}`);
+                             }
+                             window.location.href = url.href;
+                           }
+                        })
+                     },
+                     pageTabHandler(){
+                        const switchPageTab = $('.pageNumber:not(.active)');
+                        switchPageTab.click(function(e){  
+                           e.preventDefault();
+                           const pageNumber = this.dataset.pageNumber;
+                           url.searchParams.set('page', `${pageNumber}`);
+                           window.location.href = url.href;
+                        })
+                     },
+                     searchHandler(){
+                        const searchInput = $('#search-input')
+                        const searchBtn  = $('#search-btn');
+                        const searchActions = ()=>{
+                           let keyword = searchInput.val().trim();
+                              (()=>{
+                              const keywordArray = keyword.split(' ');
+                              keyword = keywordArray.reduce((acc,keyword)=>{
+                                 if(keyword !== ''){
+                                    return acc + ' ' +  keyword;
+                                 }
+                                 return acc;
+                              },'');
+                           })();
+                           url.searchParams.set('search',keyword.trim());
+                           url.searchParams.set('page',1);
+                           window.location.href = url.href;
+                        }
+                        searchBtn.click(searchActions)
+                        searchInput.on('keyup', function (e) {
+                           if (e.key === 'Enter' || e.keyCode === 13) {
+                              searchActions();
+                           }
+                        });
+                     },
+                     run(){
+                        this.changePriceInputRangeHandler();
+                        this.renderPaginationTabs();
+                        this.renderSortOptions();
+                        this.renderSearchInputValue();
+                        this.controlTabClickHandler();
+                        this.sortSelectHandler();
+                        this.sizeClickHandler();
+                        this.categoryHandler();
+                        this.pageTabHandler();
+                        this.activePageClickHandler();
+                        this.searchHandler();
+                     }
+                  }
+               })().run();
+            }
+         })
+      </script>
+   </body>
+</html>

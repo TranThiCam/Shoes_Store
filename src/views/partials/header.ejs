@@ -1,0 +1,182 @@
+<header class="header">
+   <div class="header__container">
+      <div class="header__logobar">
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <div class="nav-wrapper flex-start">
+                     <ul class="nav-list">
+                        <li class="nav-item search-section">
+                           <a class="nav-link" href="/products/search"><i class="ti-search"></i></a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="col">
+                  <div class="logo-wrapper wow flipInY">
+                     <a href="/" class="main-logo">
+                        <span> Devostack </span>
+                     </a>
+                  </div>
+               </div>
+               <div class="col">
+                  <div class="nav-wrapper">
+                     <ul class="nav-list">
+                        <% if(isLoggedIn){ %>
+                        <li class="nav-item user-cart header-cart cart-res">
+                           <a class="nav-link icon-cart" href="/cart">
+                              <i class="ti-shopping-cart"></i>
+                              <span class="shop-count pink"><%= cartList.length %></span>
+                           </a>
+                           <ul class="cart-dropdown">
+                              <% if(cartList.length===0) {%>
+                              <div
+                                 style="flex-direction: column"
+                                 class="d-flex justify-content-center align-items-center"
+                              >
+                                 <i style="font-size: 4rem !important" class="ti-face-sad"> </i>
+                                 <p style="text-align: center; margin-top: 2rem" class="nothing-title">
+                                    Bạn không có sản phẩm nào trong giỏ hàng !
+                                 </p>
+                              </div>
+                              <% } else { %>
+                              <div class="cart-scroll-list">
+                                 <% cartList.forEach((cart)=>{ %>
+                                 <li class="single-product-cart">
+                                    <div class="cart-img">
+                                       <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug  %>"
+                                          ><img src="<%= cart.PRODUCT_ITEM.PRODUCT.imageURL %>" alt=""
+                                       /></a>
+                                    </div>
+                                    <div class="cart-title">
+                                       <h5>
+                                          <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug  %>"
+                                             ><%= cart.PRODUCT_ITEM.PRODUCT.name %>
+                                          </a>
+                                       </h5>
+                                       <h6>SIZE <%= cart.PRODUCT_ITEM.size %></h6>
+                                       <span
+                                          ><%= cart.PRODUCT_ITEM.PRODUCT.discounts !== null ?
+                                          cart.PRODUCT_ITEM.PRODUCT.discounts.priceAfterApplyDiscount :
+                                          cart.PRODUCT_ITEM.PRODUCT.price %> x <%= cart.quantity %>
+                                       </span>
+                                    </div>
+                                    <div
+                                       class="cart-delete"
+                                       data-cart-price="<%= cart.PRODUCT_ITEM.PRODUCT.price %>"
+                                       data-product-id="<%= cart.PRODUCT_ITEMS_ID %>"
+                                    >
+                                       <i class="ti-trash"></i>
+                                    </div>
+                                 </li>
+                                 <% }) %>
+                              </div>
+                              <div class="cart-foot">
+                                 <li class="cart-space">
+                                    <div class="cart-sub">
+                                       <h4>Tổng cộng</h4>
+                                    </div>
+                                    <div class="cart-price">
+                                       <h4><%= cartList.totalPrice %></h4>
+                                    </div>
+                                 </li>
+                                 <li class="cart-btn-wrapper">
+                                    <a class="button full" href="/cart">Xem giỏ hàng</a>
+                                 </li>
+                              </div>
+                              <% } %>
+                           </ul>
+                        </li>
+                        <li class="nav-item user-info">
+                           <div class="nav-item__avatar">
+                              <img src="<%= user.avatar %>" alt="" />
+                           </div>
+                           <div class="user-options">
+                              <a href="/profile" id="user-profile" class="user-options__item info">
+                                 <i class="fa-regular fa-user"></i>
+                                 <span>Thông tin</span>
+                              </a>
+                              <a href="/wishlist" class="user-options__item">
+                                 <i class="fa-regular fa-heart"></i>
+                                 <span>Wishlist</span>
+                              </a>
+                              <a href="/delivery-address" class="user-options__item">
+                                 <i class="ti-location-pin"></i>
+                                 <span>Địa chỉ</span>
+                              </a>
+                              <a href="/purchase-order" class="user-options__item">
+                                 <i class="ti-pencil-alt"></i>
+                                 <span>Đơn mua</span>
+                              </a>
+                              <a href="/change-password" class="user-options__item">
+                                 <i class="ti-key"></i>
+                                 <span>Đổi mật khẩu</span>
+                              </a>
+                              <div class="user-options__item logout">
+                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                 <span>Đăng xuất</span>
+                              </div>
+                           </div>
+                        </li>
+                        <% } else { %>
+                        <li class="nav-item user-section">
+                           <a class="nav-link" href="/login"><i class="fa-regular fa-user"></i></a>
+                        </li>
+                        <% } %>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="header__menu">
+         <div class="menu-wrapper">
+            <ul class="menu-list">
+               <li class="menu-item">
+                  <a href="/products/search?brandID=6" class="menu-link">nike</a>
+               </li>
+               <li class="menu-item">
+                  <a href="/products/search?brandID=1" class="menu-link">adidas</a>
+               </li>
+               <li class="menu-item">
+                  <a href="/products/search?brandID=4" class="menu-link">converse</a>
+               </li>
+               <li class="menu-item">
+                  <a href="/products/search?brandID=10" class="menu-link">vans</a>
+               </li>
+               <li class="menu-item">
+                  <a href="#" class="menu-link">Danh mục</a>
+                  <% if(categorys) { %>
+                  <ul class="dropdown-menu">
+                     <% categorys.forEach((category)=>{ %>
+                     <li>
+                        <a class="dropdown-item" href="/products/search?cateID=<%= category.ID %>"
+                           ><span><%= category.name %></span></a
+                        >
+                     </li>
+                     <% }) %>
+                  </ul>
+                  <% } %>
+               </li>
+               <li class="menu-item">
+                  <a href="#" class="menu-link">All Brand</a>
+                  <% if(brands) { %>
+                  <ul class="dropdown-menu">
+                     <% brands.forEach((brand)=>{ %>
+                     <li>
+                        <a class="dropdown-item" href="/products/search?brandID=<%= brand.ID %>"
+                           ><span><%= brand.brandName %></span></a
+                        >
+                     </li>
+                     <% }) %>
+                  </ul>
+                  <% } %>
+               </li>
+               <li class="menu-item" id="discount-btn">
+                  <a href="" class="wow tada menu-link menu-link--sale">Discount</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</header>

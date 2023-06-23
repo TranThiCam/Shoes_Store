@@ -1,0 +1,82 @@
+<html lang="en">
+   <head>
+      <%- include('../../partials/head'); %>
+      <title>WISH LIST</title>
+      <link rel="stylesheet" href="/css/library/responsize.css" />
+      <link rel="stylesheet" href="/css/wishlist.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div class="cart-main-area pt-95 pb-100 wishlist">
+               <div class="container">
+                  <h1 class="cart-heading">wishlist</h1>
+                  <form action="#">
+                     <div class="product-style">
+                        <div class="custom-row row gx-5 gy-5">
+                           <% if(wishlist.length === 0) {%>
+                           <div class="d-flex justify-content-center align-items-center" style="flex-direction: column">
+                              <i style="font-size: 6rem" class="ti-dropbox"></i>
+                              <h2 class="cart-heading" style="font-size: 2.8rem; margin-top: 3rem; color: #444">
+                                 Wishlist chưa có sản phẩm nào :((
+                              </h2>
+                           </div>
+                           <% } %> <% wishlist.forEach((product)=> { %>
+                           <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3 product-item">
+                              <div class="product-wrapper">
+                                 <div class="product-img">
+                                    <a href="/product/<%= product.PRODUCT.slug %>">
+                                       <img src="<%= product.PRODUCT.product_images %>" alt="" />
+                                    </a>
+                                    <a href="/product/<%= product.PRODUCT.slug %>" class="add-to-cart">
+                                       <i class="ti-shopping-cart"></i>
+                                    </a>
+                                 </div>
+                                 <div class="product-content">
+                                    <div class="category__brand"><%= product.PRODUCT.BRAND%></div>
+                                    <h4>
+                                       <a href="/product/<%= product.PRODUCT.slug %>"><%= product.PRODUCT.name%></a>
+                                    </h4>
+                                    <span><%= product.PRODUCT.price %></span>
+                                 </div>
+                                 <div class="product-remove" data-product-id="<%= product.PRODUCT.ID%>">
+                                    <i class="ti-close"></i>
+                                 </div>
+                              </div>
+                           </div>
+                           <% })%>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+         <%- include('../../partials/footer') %>
+      </div>
+      <%- include('../../partials/foot') %>
+      <script type="module">
+         import { privateRequestHandler } from '/js/utils/index.js';
+         const removeProductBtn = $('.product-remove');
+         removeProductBtn.click(async function () {
+            const productID = this.dataset.productId;
+            try {
+               await privateRequestHandler(
+                  `/api/user/delete-from-wishlist/${productID}`,
+                  'delete',
+                  {},
+                  (data, status) => {
+                     toastr[data.status](data.message);
+                     if (data.status === 'success') {
+                        $(this).closest('.product-item').remove();
+                     }
+                  },
+               );
+            } catch (error) {
+               console.log('🚀 ~ file: wishlist.ejs ~ line 60 ~ error', error);
+               toastr.error('Xóa wishlist xảy ra lỗi ');
+            }
+         });
+      </script>
+   </body>
+</html>

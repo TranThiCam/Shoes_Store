@@ -1,0 +1,318 @@
+@import './variable';
+@import './mixi';
+.cart {
+   padding: 8rem 0;
+   .cart-heading {
+      text-align: center;
+   }
+   .cart-title-area {
+      padding-top: 30px;
+   }
+   .car-header-title h2 {
+      font-size: 20px;
+      margin: 0;
+      text-transform: uppercase;
+   }
+   .table-content table {
+      background: #fff none repeat scroll 0 0;
+      border-color: #e5e5e5;
+      border-radius: 0;
+      border-style: solid;
+      border-width: 1px 0 0 1px;
+      margin: 0 0 50px;
+      text-align: center;
+      width: 100%;
+      border: none;
+   }
+   .wishlist .table-content table {
+      margin: 0 0 0px;
+   }
+   .table-content.wish table {
+      margin: 0 0 0px;
+   }
+   .table-content table th {
+      border-top: medium none;
+      color: #555;
+      font-size: 16px;
+      font-weight: normal;
+      padding: 15px 10px 12px;
+      text-align: center;
+      text-transform: uppercase;
+      vertical-align: middle;
+      white-space: nowrap;
+   }
+   .table-content table td {
+      border-top: medium none;
+      padding: 2rem 1rem;
+      vertical-align: middle;
+      .discount {
+         color: green;
+         font-style: italic;
+      }
+      //   font-size: 1;
+   }
+   .table-content table td input {
+      color: #6f6f6f;
+      font-size: 15px;
+      font-weight: normal;
+      height: 40px;
+   }
+   .table-content table td.product-subtotal {
+      color: #555;
+      font-size: 15px;
+      width: 160px;
+   }
+   .table-content table td.product-name a {
+      color: #6f6f6f;
+      font-size: 1.7rem;
+      margin-left: 10px;
+   }
+   .table-content table td.product-name a:hover {
+      color: #050035;
+   }
+   .table-content table td.product-name {
+      max-width: 250px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+   }
+   .table-content table td.product-thumbnail {
+      width: 130px;
+      a {
+         width: 10rem;
+         height: 10rem;
+         position: relative;
+         padding: 0.4rem;
+         display: inline-flex;
+         align-items: center;
+      }
+      img {
+         width: 100%;
+         object-fit: cover;
+      }
+      .discount-label {
+         position: absolute;
+         top: 0;
+         left: 0;
+         background-color: $color-bg-discount;
+         padding: 0.5rem;
+         user-select: none;
+         color: white !important;
+      }
+   }
+   .table-content table td.product-remove i {
+      color: #919191;
+      display: inline-block;
+      font-size: 2rem;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      width: 40px;
+   }
+   .product-remove-btn {
+      cursor: pointer;
+      width: fit-content;
+      margin: 0 auto;
+   }
+   .table-content table .product-price-cart .amount {
+      color: #555;
+      font-size: 1.8rem;
+   }
+   .table-content table td.product-remove i:hover {
+      color: #050035;
+   }
+   .table-content table td.product-quantity {
+      width: 180px;
+   }
+   .table-content table td.product-remove {
+      width: 150px;
+   }
+   .table-content table td.product-price-cart {
+      width: 130px;
+   }
+   thead {
+      background-color: #f6f6f6;
+   }
+   .cart-page-total li:last-child {
+      border-bottom: none;
+   }
+   .table-content table tr:not(:last-child) {
+      border-bottom: 1px solid #ccc;
+   }
+
+   .cart-page-total {
+      padding-top: 50px;
+      display: flex;
+      flex-direction: column;
+      & > ul {
+         border: 1px solid #ddd;
+      }
+      & > h2 {
+         font-size: 2.3rem;
+         text-align: center;
+         font-weight: 500;
+         margin-bottom: 20px;
+      }
+      & > a {
+         background-color: #333;
+         border: 1px solid #333;
+         color: #fff;
+         display: inline-block;
+         margin-top: 30px;
+         padding: 9px 20px;
+         text-transform: capitalize;
+         transition: all 0.3s ease 0s;
+         &:hover {
+            background-color: #050035;
+            color: #fff;
+            border: 1px solid #050035;
+         }
+      }
+      span {
+         white-space: nowrap;
+         letter-spacing: 1px;
+         &.origin-price {
+            text-decoration: line-through;
+            opacity: 0.8;
+         }
+
+         &.shipment {
+            font-size: 1.4rem;
+            font-weight: light;
+            font-style: italic;
+         }
+         &.discount {
+            color: rgb(90, 166, 90);
+         }
+         &.payment-total {
+            font-size: 1.7rem;
+            font-weight: bold;
+         }
+      }
+      li {
+         display: flex;
+         white-space: nowrap;
+         justify-content: space-between;
+         border-bottom: 1px solid #ddd;
+         color: #555;
+         font-size: 1.6rem;
+         font-weight: 500;
+         padding: 1.6rem 3rem;
+      }
+      .button.btn-checkout {
+         margin: 3rem auto;
+         max-width: 50%;
+         min-width: 30rem;
+      }
+   }
+   input.cart-plus-minus-box {
+      background: transparent none repeat scroll 0 0;
+      border: medium none;
+      float: left;
+      font-size: 16px;
+      height: 25px;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      width: 25px;
+   }
+   .cart-plus-minus *::-moz-selection {
+      background: transparent none repeat scroll 0 0;
+      color: #333;
+      text-shadow: none;
+   }
+   .cart-plus-minus {
+      border: 1px solid #dcdcdc;
+      overflow: hidden;
+      margin: 0 auto;
+      @include centerFlexItems;
+      width: 80px;
+   }
+   .qtybutton {
+      color: #727272;
+      cursor: pointer;
+      font-size: 2rem;
+      font-weight: 600;
+      height: 20px;
+      user-select: none;
+      width: 20px;
+      @include centerFlexItems;
+      @include transition;
+      &:hover {
+         color: $color-black;
+      }
+      &.disable {
+         opacity: 0.5;
+         cursor: default;
+         &:hover {
+            color: #727272;
+         }
+      }
+   }
+
+   #choose-address-modal {
+      &.show {
+         .my-overlay {
+            @include show();
+         }
+      }
+      .my-overlay {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100vw;
+         height: 100vh;
+         background-color: rgba(0, 0, 0, 0.2);
+         z-index: 100000000000000;
+         @include transition();
+         @include hidden();
+         .my-modal {
+            position: absolute;
+            @include centerPosition();
+            background-color: white;
+            width: 600px;
+            min-height: 400px;
+            border-radius: 8px;
+            padding: 3rem;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            .btn-close-modal {
+               position: absolute;
+               width: 5rem;
+               height: 5rem;
+               @include centerFlexItems;
+               top: 1.2rem;
+               right: 1.5rem;
+               cursor: pointer;
+               @include transition;
+               &:hover {
+                  color: var(--bs-danger);
+               }
+               i {
+                  font-size: 2rem;
+               }
+            }
+            .head {
+               padding-bottom: 1rem;
+               .title {
+                  font-size: 2.5rem;
+                  text-transform: uppercase;
+                  letter-spacing: 2px;
+                  text-align: center;
+               }
+            }
+            .body {
+               padding: 2rem 0;
+               .address-wrapper {
+                  min-height: 300px;
+                  overflow: hidden auto;
+                  border: 1px solid #ccc;
+                  border-radius: 12px;
+                  padding: 2rem;
+               }
+            }
+            .foot {
+            }
+         }
+      }
+   }
+}
